@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>RTI Application Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">RTI Application Generator</h2>
+
+    <!-- RTI Form -->
+    <form action="/submit-rti" method="POST">
+      <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" id="subject" class="form-control" value="<%= subject %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" class="form-control" rows="4" required><%= description %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="department">Select Department:</label>
+        <select name="department" id="department" class="form-control" required>
+          <option value="education" <%= department === 'education' ? 'selected' : '' %>>Education</option>
+          <option value="health" <%= department === 'health' ? 'selected' : '' %>>Health</option>
+          <option value="transport" <%= department === 'transport' ? 'selected' : '' %>>Transport</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sourceLang">Enter in Language:</label>
+        <select name="sourceLang" id="sourceLang" class="form-control">
+          <option value="hi" <%= sourceLang === 'hi' ? 'selected' : '' %>>Hindi</option>
+          <option value="en" <%= sourceLang === 'en' ? 'selected' : '' %>>English</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="targetLang">Translate To:</label>
+        <select name="targetLang" id="targetLang" class="form-control">
+          <option value="en" <%= targetLang === 'en' ? 'selected' : '' %>>English</option>
+          <option value="hi" <%= targetLang === 'hi' ? 'selected' : '' %>>Hindi</option>
+          <option value="es" <%= targetLang === 'es' ? 'selected' : '' %>>Spanish</option>
+          <option value="fr" <%= targetLang === 'fr' ? 'selected' : '' %>>French</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Generate RTI Application</button>
+    </form>
+
+    <!-- Display Translated Application -->
+    <% if (translatedDescription) { %>
+      <div class="mt-5 p-3 bg-light border rounded">
+        <h5>📄 Generated RTI Application in
+          <%= targetLang === 'en' ? 'English' : targetLang === 'hi' ? 'Hindi' : targetLang === 'es' ? 'Spanish' : 'French' %>:
+        </h5>
+        <p><strong>Subject:</strong> <%= subject %></p>
+        <p><strong>Department:</strong> <%= department %></p>
+        <p><strong>Application:</strong> <%= translatedDescription %></p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

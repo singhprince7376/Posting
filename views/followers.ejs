@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= user.name %>'s Followers</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #f1f1f1;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(30, 32, 34, 0.95);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            padding: 32px;
+        }
+        h1 {
+            color: #4db8ff;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .follower {
+            display: flex;
+            align-items: center;
+            background: rgba(44, 47, 51, 0.98);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #222;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .follower:hover {
+            box-shadow: 0 6px 24px #4db8ff33;
+            transform: translateY(-2px);
+        }
+        .follower img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #4db8ff;
+            object-fit: cover;
+            margin-right: 16px;
+            transition: transform 0.3s;
+        }
+        .follower img:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+        .follower a {
+            color: #4db8ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .follower a:hover {
+            text-decoration: underline;
+            color: #ffb84d;
+        }
+        .no-followers {
+            color: #aaa;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 40px;
+        }
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 20px;
+            background: linear-gradient(90deg, #4db8ff 0%, #007acc 100%);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, #007acc 0%, #4db8ff 100%);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/user/<%= user._id %>" class="back-btn">Back to Profile</a>
+        <h1><%= user.name %>'s Followers</h1>
+        <% if (followers.length === 0) { %>
+            <p class="no-followers">No followers yet.</p>
+        <% } else { %>
+            <% followers.forEach((follower) => { %>
+                <div class="follower">
+                    <img src="<%= follower.profilePic || 'default.png' %>" alt="Profile Picture" />
+                    <a href="/user/<%= follower._id %>"><%= follower.name %></a>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+body {
+  background-color: #f4f7fa;
+}
+h2 {
+  color: #007bff;
+}
+form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.bg-light {
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}

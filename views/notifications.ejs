@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;
+            max-width: 800px;
+            margin: 30px auto;
+            background: rgba(30, 32, 34, 0.95);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            padding: 32px;
+        }
+        h1 {
+            color: #4db8ff;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .notification {
+            background: rgba(44, 47, 51, 0.98);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #222;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .notification:hover {
+            box-shadow: 0 6px 24px #4db8ff33;
+            transform: translateY(-2px) scale(1.01);
+        }
+        .notification img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #4db8ff;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        .notification p {
+            margin: 0;
+            color: #f1f1f1;
+        }
+        .notification small {
+            color: #aaa;
+        }
+        .btn {
+            background: linear-gradient(90deg, #4db8ff 0%, #007acc 100%);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: linear-gradient(90deg, #007acc 0%, #4db8ff 100%);
+        }
+        .no-notifications {
+            text-align: center;
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Notifications</h1>
+        <% if (notifications.length > 0) { %>
+            <form action="/notifications/clear" method="POST" style="text-align: center; margin-bottom: 20px;">
+                <button type="submit" class="btn" onclick="return confirm('Are you sure you want to clear all notifications?')">Clear All Notifications</button>
+            </form>
+        <% } %>
+        <% if (notifications.length === 0) { %>
+            <p class="no-notifications">No notifications yet.</p>
+        <% } else { %>
+            <% notifications.forEach(notification => { %>
+                <div class="notification">
+                    <img src="<%= notification.fromUser.profilePic %>" alt="Profile Picture">
+                    <p>
+                        <strong><%= notification.fromUser.name %></strong>
+                        <% if (notification.type === 'follow') { %>
+                            started following you.
+                        <% } else if (notification.type === 'like') { %>
+                            liked your post "<%= notification.post.title %>".
+                        <% } else if (notification.type === 'comment') { %>
+                            commented on your post "<%= notification.post.title %>".
+                        <% } else if (notification.type === 'post') { %>
+                            made a new post.
+                        <% } %>
+                    </p>
+                    <small><%= notification.createdAt.toDateString() %></small>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+</body>
+</html>
